@@ -22,9 +22,10 @@ app.use(cors(corsOptions));
 // Import API routes related to customers
 const customerRoutes = require("./routes/customer");
 const taxRoutes = require("./routes/tax");
+const expirationRoutes = require("./routes/expiration");
 
 // Configure routes
-app.use("/api", customerRoutes, taxRoutes);
+app.use("/api", customerRoutes, taxRoutes, expirationRoutes);
 
 // Configure the port where the server will listen
 const port = process.env.PORT || 3001;
