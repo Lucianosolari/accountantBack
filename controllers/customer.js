@@ -16,8 +16,22 @@ exports.getCustomers = async (req, res) => {
 // Controlador para crear un nuevo cliente
 exports.createCustomer = async (req, res) => {
   try {
-    const { name, tax_id } = req.body;
-    await Customer.create(name, tax_id);
+    const {
+      name,
+      tax_id,
+      password_afip,
+      password_municipal,
+      extras,
+      responsable,
+    } = req.body;
+    await Customer.create(
+      name,
+      tax_id,
+      password_afip,
+      password_municipal,
+      extras,
+      responsable
+    );
     res.status(201).json({ message: "Customer created successfully" });
   } catch (error) {
     console.error(error);

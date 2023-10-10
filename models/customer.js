@@ -9,9 +9,24 @@ class Customer {
     return rows;
   }
 
-  static async create(name, tax_id) {
-    const query = "INSERT INTO customers (name, tax_id) VALUES ($1, $2)";
-    const values = [name, tax_id];
+  static async create(
+    name,
+    tax_id,
+    password_afip,
+    password_municipal,
+    extras,
+    responsable
+  ) {
+    const query =
+      "INSERT INTO customers (name, tax_id, password_afip, password_municipal, extras, responsable) VALUES ($1, $2, $3, $4, $5, $6)";
+    const values = [
+      name,
+      tax_id,
+      password_afip,
+      password_municipal,
+      extras,
+      responsable,
+    ];
     await pool.query(query, values);
   }
 }

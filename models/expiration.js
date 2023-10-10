@@ -25,6 +25,51 @@ class Expiration {
     const { rows } = await pool.query(query);
     return rows;
   }
+
+  static async getAllDueDatesWithTaxesForCustomers() {
+    const query = `
+    SELECT
+    main.id,
+    main.tax_name,
+    main.due_day,
+    main.customer_id,
+    main.customer_name,
+    main.cuit
+FROM
+    (
+        SELECT
+            due_dates.id,
+            taxes.name AS tax_name,
+            due_dates.due_day,
+            customers.id AS customer_id,
+            customers.name AS customer_name,
+            customers.tax_id AS cuit,
+            CASE
+                WHEN (
+                    taxes.id = 1 AND
+                    CAST(due_dates.tax_termination AS integer) = RIGHT(customers.tax_id::text, 1)::integer
+                ) THEN
+                    due_dates.tax_termination
+                ELSE
+                    NULL
+            END AS calculated_termination
+        FROM
+            due_dates
+        INNER JOIN
+            taxes ON due_dates.tax_id = taxes.id
+        INNER JOIN
+            customer_tax ON taxes.id = customer_tax.tax_id
+        INNER JOIN
+            customers ON customer_tax.customer_id = customers.id
+    ) AS main
+WHERE
+    main.calculated_termination IS NOT NULL
+    OR main.tax_name != 'IVA';
+
+  `;
+    const { rows } = await pool.query(query);
+    return rows;
+  }
 }
 
 module.exports = Expiration;

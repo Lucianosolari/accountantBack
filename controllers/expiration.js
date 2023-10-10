@@ -34,3 +34,13 @@ exports.getExpirationWithTax = async (req, res) => {
     res.status(500).json({ message: "Error retrieving expiration" });
   }
 };
+
+exports.getExpirationWithTaxForCustomer = async (req, res) => {
+  try {
+    const expiration = await Expiration.getAllDueDatesWithTaxesForCustomers();
+    res.json(expiration);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error retrieving expiration" });
+  }
+};

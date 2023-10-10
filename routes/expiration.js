@@ -12,7 +12,12 @@ router.post("/due_dates", expirationController.createExpiration);
 
 router.get("/due_dates_with", expirationController.getExpirationWithTax);
 
+router.get(
+  "/due_dates_with_customers",
+  expirationController.getExpirationWithTaxForCustomer
+);
 // Other routes for updating and deleting customers
+
 // ...
 
 module.exports = router;
