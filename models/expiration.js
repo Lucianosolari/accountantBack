@@ -21,6 +21,7 @@ class Expiration {
     SELECT due_dates.id, taxes.name, due_dates.tax_termination, due_dates.due_day
     FROM due_dates
     INNER JOIN taxes ON due_dates.tax_id = taxes.id
+    ORDER BY due_day
   `;
     const { rows } = await pool.query(query);
     return rows;
@@ -64,7 +65,8 @@ FROM
     ) AS main
 WHERE
     main.calculated_termination IS NOT NULL
-    OR main.tax_name != 'IVA';
+    OR main.tax_name != 'IVA'
+    ORDER BY main.due_day;
 
   `;
     const { rows } = await pool.query(query);
