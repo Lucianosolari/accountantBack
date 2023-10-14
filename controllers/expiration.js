@@ -44,3 +44,14 @@ exports.getExpirationWithTaxForCustomer = async (req, res) => {
     res.status(500).json({ message: "Error retrieving expiration" });
   }
 };
+
+exports.updateExpiration = async (req, res) => {
+  try {
+    const { tax_id, tax_termination, due_day } = req.body;
+    await Expiration.updateExpiration(tax_id, tax_termination, due_day);
+    res.status(201).json({ message: "Expiration created successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error creating a Expiration" });
+  }
+};

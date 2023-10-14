@@ -7,6 +7,7 @@ const expirationController = require("../controllers/expiration");
 // Route to get all customers
 router.get("/due_dates", expirationController.getExpiration);
 
+router.put("/due_dates", expirationController.updateExpiration);
 // Route to create a new customer
 router.post("/due_dates", expirationController.createExpiration);
 

@@ -18,7 +18,7 @@ class Expiration {
 
   static async getAllDueDatesWithTaxes() {
     const query = `
-    SELECT due_dates.id, taxes.name, due_dates.tax_termination, due_dates.due_day
+    SELECT due_dates.id, due_dates.tax_id, taxes.name, due_dates.tax_termination, due_dates.due_day
     FROM due_dates
     INNER JOIN taxes ON due_dates.tax_id = taxes.id
     ORDER BY due_day
@@ -72,6 +72,12 @@ WHERE
     const { rows } = await pool.query(query);
     return rows;
   }
-}
 
+  static async updateExpiration(tax_id, tax_termination, due_dates) {
+    const query =
+      "UPDATE due_dates SET due_day = $3 WHERE tax_id = $1 and tax_termination = $2";
+    const values = [tax_id, tax_termination, due_dates];
+    await pool.query(query, values);
+  }
+}
 module.exports = Expiration;

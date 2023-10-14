@@ -4,7 +4,7 @@ const pool = require("../config/database"); // Importa la configuración de la c
 
 class Customer {
   static async getAll() {
-    const query = "SELECT * FROM customers";
+    const query = "SELECT * FROM customers ORDER BY name";
     const { rows } = await pool.query(query);
     return rows;
   }
