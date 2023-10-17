@@ -24,9 +24,17 @@ const customerRoutes = require("./routes/customer");
 const taxRoutes = require("./routes/tax");
 const expirationRoutes = require("./routes/expiration");
 const customerTaxRoutes = require("./routes/customerTax");
+const taskRoutes = require("./routes/task");
 
 // Configure routes
-app.use("/api", customerRoutes, taxRoutes, expirationRoutes, customerTaxRoutes);
+app.use(
+  "/api",
+  customerRoutes,
+  taxRoutes,
+  expirationRoutes,
+  customerTaxRoutes,
+  taskRoutes
+);
 
 // Configure the port where the server will listen
 const port = process.env.PORT || 3001;
