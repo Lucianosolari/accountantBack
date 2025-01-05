@@ -10,6 +10,7 @@ router.get("/customers", customerController.getCustomers);
 // Route to create a new customer
 router.post("/customers", customerController.createCustomer);
 
+router.put("/customers/:id", customerController.updateCustomer);
 // Other routes for updating and deleting customers
 // ...
 

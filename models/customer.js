@@ -29,6 +29,43 @@ class Customer {
     ];
     await pool.query(query, values);
   }
+  static async update(
+    id,
+    { name, tax_id, password_afip, password_municipal, extras, responsable }
+  ) {
+    const query = `
+      UPDATE customers 
+      SET 
+        name = $1,
+        tax_id = $2,
+        password_afip = $3,
+        password_municipal = $4,
+        extras = $5,
+        responsable = $6
+      WHERE id = $7
+    `;
+    const values = [
+      name,
+      tax_id,
+      password_afip,
+      password_municipal,
+      extras,
+      responsable,
+      id,
+    ];
+
+    try {
+      const { rowCount } = await pool.query(query, values);
+
+      if (rowCount === 0) {
+        throw new Error(`Cliente con ID ${id} no encontrado`);
+      }
+
+      return { success: true, message: "Cliente actualizado exitosamente" };
+    } catch (error) {
+      throw new Error(`Error al actualizar cliente: ${error.message}`);
+    }
+  }
 }
 
 module.exports = Customer;
